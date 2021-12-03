@@ -28,20 +28,19 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     private lateinit var serviceIntent: Intent
 
     private var timerState = TimerState.Stopped
-    private var whatsNow = "Pomodoro"
     private var timeOfSinglePomodoro = 10L
-    private var timeOfShortBreak = 3L
-    private var timeOfLongBreak = 7L
+    private var timeOfShortBreak = 3L * 60
+    private var timeOfLongBreak = 7L * 60
     private var quantityOfPomodoros = 4
     private var numberOfFinishedPomodoro = 1
     private var numberOfShortBreaksBeforeLongBreak = 3
-    private var numberOfShortBreaks = 3
+    private var numberOfShortBreaks = numberOfShortBreaksBeforeLongBreak
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (navArgs.isQuickPomodoro) setQuickPomodoro() else setSelectedPomodoro()
-
+        setPomodoro()
+        updateButtons()
         setListeners()
         setService()
     }
@@ -50,6 +49,8 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         super.onDestroyView()
         requireContext().unregisterReceiver(updateTime)
     }
+
+    private fun setPomodoro() = if (navArgs.isQuickPomodoro) setQuickPomodoro() else setSelectedPomodoro()
 
     private fun setListeners(){
         binding.apply {
@@ -60,23 +61,23 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     }
 
     private fun setQuickPomodoro(){
-        timeOfSinglePomodoro = viewModel.getTimeFormSharedPreferences().toLong()
+        timeOfSinglePomodoro = viewModel.getTimeFormSharedPreferences().toLong() * 60
         quantityOfPomodoros = viewModel.getQuantityFromSharedPreferences()
         binding.pomodoroNameTV.text = getString(R.string.quick_pomodoro)
-        binding.mainTimer.text = "$timeOfSinglePomodoro:00"
+        binding.mainTimer.text = "${timeOfSinglePomodoro / 60}:00"
         binding.counter.text = "1/$quantityOfPomodoros"
     }
 
     private fun setSelectedPomodoro(){
         currentPomodoro = navArgs.pomodoroInstance!!
         with(currentPomodoro){
-            timeOfSinglePomodoro = this.taskTime.toLong()
+            timeOfSinglePomodoro = this.taskTime.toLong() * 60
             timeOfShortBreak = this.shortBreakTime.toLong()
             timeOfLongBreak = this.longBreakTime.toLong()
             quantityOfPomodoros = this.workAmount
             numberOfShortBreaksBeforeLongBreak = this.longBreakOften
             binding.pomodoroNameTV.text = this.name
-            binding.mainTimer.text = "${this.taskTime}:00"
+            binding.mainTimer.text = "${this.taskTime / 60}:00"
             binding.counter.text = "1/${this.workAmount}"
         }
     }
@@ -120,7 +121,6 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         override fun onReceive(context: Context?, intent: Intent?) {
             val previousTimerTask = intent!!.getSerializableExtra(TimerService.TIMER_STATUS_VAL)
             if (previousTimerTask == TimerTask.Pomodoro){
-                updatePomodoroCounter()
                 when {
                     numberOfFinishedPomodoro == (quantityOfPomodoros + 1) -> {
                         finishedPomodoro()
@@ -128,10 +128,12 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
                     numberOfShortBreaks != 0 -> {
                         startTimerFromStopped(timeOfShortBreak, TimerTask.ShortBreak)
                         numberOfShortBreaks--
+                        updatePomodoroCounter()
                     }
                     numberOfShortBreaks == 0 -> {
                         startTimerFromStopped(timeOfLongBreak, TimerTask.LongBreak)
                         numberOfShortBreaks = numberOfShortBreaksBeforeLongBreak
+                        updatePomodoroCounter()
                     }
                 }
             } else{
@@ -182,6 +184,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         timerState = TimerState.Stopped
         requireContext().stopService(serviceIntent)
         updateButtons()
+        setPomodoro()
     }
 
     private fun updateButtons(){
@@ -213,6 +216,11 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     }
 
     private fun finishedPomodoro(){
+        setPomodoro()
+        updateButtons()
+    }
+
+    private fun updateProgressCircle(){
 
     }
 
