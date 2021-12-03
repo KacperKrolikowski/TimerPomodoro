@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/pomodoroFragment">
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.krolikowski.timerpomodoro.ui.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/pomodoroFragment"
+        android:name="com.krolikowski.timerpomodoro.ui.pomodoro.PomodoroFragment"
+        android:label="PomodoroFragment" >
+        <argument
+            android:name="isQuickPomodoro"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="pomodoroInstance"
+            app:argType="com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <fragment
+        android:id="@+id/pomodoroListFragment"
+        android:name="com.krolikowski.timerpomodoro.ui.pomodorolist.PomodoroListFragment"
+        android:label="PomodoroListFragment" >
+        <action
+            android:id="@+id/action_pomodoroListFragment_to_pomodoroFragment"
+            app:destination="@id/pomodoroFragment" />
+        <action
+            android:id="@+id/action_pomodoroListFragment_to_pomodoroCreatorFragment"
+            app:destination="@id/pomodoroCreatorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pomodoroCreatorFragment"
+        android:name="com.krolikowski.timerpomodoro.ui.pomodorocreator.PomodoroCreatorFragment"
+        android:label="PomodoroCreatorFragment" >
+        <action
+            android:id="@+id/action_pomodoroCreatorFragment_to_pomodoroListFragment"
+            app:destination="@id/pomodoroListFragment" />
+        <argument
+            android:name="isNewPomodoro"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="pomodoroToEdit"
+            app:argType="com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+</navigation>
