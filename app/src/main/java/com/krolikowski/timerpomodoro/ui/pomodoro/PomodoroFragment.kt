@@ -52,16 +52,10 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     }
 
     private fun setListeners(){
-        binding.startFab.setOnClickListener {
-            startPomodoro()
-        }
-
-        binding.pauseFab.setOnClickListener {
-            pausePomodoro()
-        }
-
-        binding.stopFab.setOnClickListener {
-            stopPomodoro()
+        binding.apply {
+            startFab.setOnClickListener { startPomodoro() }
+            pauseFab.setOnClickListener { pausePomodoro() }
+            stopFab.setOnClickListener { stopPomodoro() }
         }
     }
 
