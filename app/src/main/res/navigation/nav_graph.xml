@@ -42,12 +42,9 @@
             app:destination="@id/pomodoroListFragment" />
         <argument
             android:name="isNewPomodoro"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            app:argType="boolean" />
         <argument
             android:name="pomodoroToEdit"
-            app:argType="com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:argType="com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro" />
     </fragment>
 </navigation>

@@ -11,11 +11,11 @@
     <string name="title_setting">Settings</string>
     <string name="title_pomodoro">Pomodoro</string>
     <string name="title_habits">Habits</string>
-    <string name="habit_name_hint">Set your habit name</string>
+    <string name="pomodoro_name_hint">Set your pomodoro name</string>
     <string name="habit_name_set">Habit name</string>
     <string name="pomodoro_time">Select time of one pomodoro</string>
     <string name="pomodoro_quantity">Select quantity of pomodoro sessions</string>
-    <string name="pomodoro_quantity_befor_long">Quantity of pomodoro before long break</string>
+    <string name="pomodoro_quantity_before_long">Quantity of pomodoro before long break</string>
     <string name="time_of_short">Time of short break</string>
     <string name="time_of_long">Time of long break</string>
     <string name="habit_delete">Delete</string>
@@ -25,11 +25,11 @@
     <string name="stop_pomodoro_timer">Stop</string>
     <string name="choose_your_own_icon">Choose your own icon!</string>
     <string name="save_habit">Save habit</string>
-    <string name="pause">Pause</string>
     <string name="reset">Reset</string>
     <string name="need_a_break">Need a break?</string>
     <string name="finish">Finish</string>
     <string name="quickpomodorosettings">QuickPomodoro Settings</string>
+    <string name="pomodoro_description_hint">Set your pomodoro description</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="quick_pomodoro">Quick Pomodoro</string>
     <string name="settings_time_of_one_pomodoro">Time of one pomodoro</string>
@@ -42,4 +42,7 @@
     <string name="start_quick_pomodoro">Start Quick Pomodoro</string>
     <string name="enable_dark_mode_in_pomodoro">Enable dark mode in Pomodoro</string>
     <string name="starting_button">Starting button</string>
+    <string name="stop">Stop</string>
+    <string name="pause">Pause</string>
+    <string name="start">Start</string>
 </resources>

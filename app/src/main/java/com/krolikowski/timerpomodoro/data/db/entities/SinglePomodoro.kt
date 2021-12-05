@@ -19,8 +19,6 @@ data class SinglePomodoro(
     var workAmount: Int,
     @ColumnInfo(name = "pomodoro_short_break_time")
     var shortBreakTime: Int,
-    @ColumnInfo(name = "pomodoro_short_break_amount")
-    var shortBreakAmount: Int,
     @ColumnInfo(name = "pomodoro_long_break_time")
     var longBreakTime: Int,
     @ColumnInfo(name = "pomodoro_long_break_often")

@@ -2,209 +2,207 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pomodoro_name_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/habit_name_set"
-        android:textColor="#000000"
+        android:hint="@string/pomodoro_name_hint"
+        app:layout_constraintEnd_toStartOf="@+id/pomodoro_time_picker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/habit_name"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pomodoro_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pomodoro_description_layout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:hint="@string/habit_name_hint"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:hint="@string/pomodoro_description_hint"
+        app:layout_constraintEnd_toStartOf="@+id/pomodoro_time_picker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        android:autofillHints="New habit"
-        android:inputType="textCapSentences" />
+        app:layout_constraintTop_toBottomOf="@id/pomodoro_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+    <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pomodoro_description_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/text_View_Time"
+        android:id="@+id/pomodoro_time_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="48dp"
         android:text="@string/pomodoro_time"
         android:textColor="#000000"
-        app:layout_constraintBottom_toTopOf="@+id/text_View_Quantity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_name"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintTop_toBottomOf="@+id/pomodoro_description_layout" />
 
     <NumberPicker
-        android:id="@+id/habit_time"
+        android:id="@+id/pomodoro_time_picker"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/pomodoro_time_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_View_Time"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.146" />
+        app:layout_constraintStart_toEndOf="@+id/pomodoro_time_textview"
+        app:layout_constraintTop_toTopOf="@+id/pomodoro_time_textview"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/text_View_Quantity"
+        android:id="@+id/pomodoro_quantity_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
         android:text="@string/pomodoro_quantity"
         android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_name"
-        app:layout_constraintVertical_bias="0.174" />
+        app:layout_constraintTop_toBottomOf="@+id/pomodoro_time_textview" />
 
     <NumberPicker
-        android:id="@+id/habit_quantity"
+        android:id="@+id/pomodoro_quantity_picker"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/pomodoro_quantity_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_View_Quantity"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <CheckBox
-        android:id="@+id/repete_CB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/repeat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/habit_quantity" />
+        app:layout_constraintStart_toEndOf="@+id/pomodoro_quantity_textview"
+        app:layout_constraintTop_toTopOf="@+id/pomodoro_quantity_textview" />
 
     <CheckBox
         android:id="@+id/advance_Options"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/advance_options"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.449" />
+        app:layout_constraintTop_toBottomOf="@+id/pomodoro_quantity_textview" />
 
     <TextView
-        android:id="@+id/text_View_Short_Break_Adv"
+        android:id="@+id/short_break_time_adv_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:text="@string/time_of_short"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintTop_toBottomOf="@+id/advance_Options" />
 
     <NumberPicker
-        android:id="@+id/time_of_short_picker"
+        android:id="@+id/short_break_time_adv_picker"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/short_break_time_adv_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_View_Short_Break_Adv"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/short_break_time_adv_textview"
+        app:layout_constraintTop_toTopOf="@+id/short_break_time_adv_textview"
         app:layout_constraintVertical_bias="0.557" />
 
     <TextView
-        android:id="@+id/text_View_Long_Break_Adv"
+        android:id="@+id/long_break_time_adv_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
         android:text="@string/time_of_long"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
+        app:layout_constraintTop_toBottomOf="@+id/short_break_time_adv_textview" />
 
     <NumberPicker
-        android:id="@+id/time_of_long_picker"
+        android:id="@+id/long_break_time_adv_picker"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/long_break_time_adv_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_View_Long_Break_Adv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintStart_toEndOf="@+id/long_break_time_adv_textview"
+        app:layout_constraintTop_toTopOf="@+id/long_break_time_adv_textview"
+        app:layout_constraintVertical_bias="0.5" />
 
     <TextView
-        android:id="@+id/text_View_Quantity_Adv"
+        android:id="@+id/short_breaks_before_long_break_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="@string/pomodoro_quantity_befor_long"
+        android:layout_marginTop="64dp"
+        android:text="@string/pomodoro_quantity_before_long"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751" />
+        app:layout_constraintTop_toBottomOf="@+id/long_break_time_adv_textview" />
 
     <NumberPicker
-        android:id="@+id/quantity_before_break_picker"
+        android:id="@+id/short_breaks_before_long_break_picker"
         android:layout_width="62dp"
         android:layout_height="62dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/short_breaks_before_long_break_textview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/text_View_Quantity_Adv"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.765" />
+        app:layout_constraintStart_toEndOf="@+id/short_breaks_before_long_break_textview"
+        app:layout_constraintTop_toTopOf="@+id/short_breaks_before_long_break_textview"
+        app:layout_constraintVertical_bias="0.5" />
 
-    <ImageButton
-        android:id="@+id/delete_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:background="#FF0000"
-        android:contentDescription="@string/habit_delete"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/ic_delete" />
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/delete_button"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:layout_marginEnd="24dp"
+            android:textColor="@color/hard_red"/>
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            android:layout_marginStart="24dp"
+            android:backgroundTint="@color/someGreen"/>
+
+    </LinearLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

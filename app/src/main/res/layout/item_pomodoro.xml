@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textSize="16sp"
         app:layout_constraintEnd_toStartOf="@+id/goToPomodoroButton"
@@ -39,14 +39,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/title_text"
         app:srcCompat="@drawable/ic_arrow_start" />
-
-    <Button
-        android:id="@+id/editPomodoro"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/description_text"
-        app:layout_constraintEnd_toStartOf="@+id/goToPomodoroButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

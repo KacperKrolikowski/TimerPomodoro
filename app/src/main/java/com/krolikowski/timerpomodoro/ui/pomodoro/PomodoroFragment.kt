@@ -29,8 +29,8 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
 
     private var timerState = TimerState.Stopped
     private var timeOfSinglePomodoro = 10L
-    private var timeOfShortBreak = 3L * 60
-    private var timeOfLongBreak = 7L * 60
+    private var timeOfShortBreak = 1L * 60
+    private var timeOfLongBreak = 1L * 60
     private var quantityOfPomodoros = 4
     private var numberOfFinishedPomodoro = 1
     private var numberOfShortBreaksBeforeLongBreak = 3
@@ -39,6 +39,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        updateProgressCircle()
         setPomodoro()
         updateButtons()
         setListeners()
@@ -92,6 +93,18 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         override fun onReceive(context: Context?, intent: Intent?) {
             val receivedTime = intent!!.getLongExtra(TimerService.TIME_EXTRA, 0L)
             updateUI(receivedTime)
+            updateOnTickProgressCircle(receivedTime)
+        }
+    }
+
+    private fun updateOnTickProgressCircle(receiverTime: Long){
+        when(receiverTime){
+            0L -> {
+                binding.progressBarMinutes.progress += 1
+            }
+            else -> {
+                binding.progressBarSeconds.progress = ((60 - receiverTime) * 2).toInt()
+            }
         }
     }
 
@@ -129,15 +142,26 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
                         startTimerFromStopped(timeOfShortBreak, TimerTask.ShortBreak)
                         numberOfShortBreaks--
                         updatePomodoroCounter()
+                        binding.progressBarPomodoroCounter.progress = numberOfFinishedPomodoro * (100/quantityOfPomodoros)
+                        binding.progressBarMinutes.apply {
+                            progress = 0
+                            max = timeOfShortBreak.toInt()
+                        }
                     }
                     numberOfShortBreaks == 0 -> {
                         startTimerFromStopped(timeOfLongBreak, TimerTask.LongBreak)
                         numberOfShortBreaks = numberOfShortBreaksBeforeLongBreak
                         updatePomodoroCounter()
+                        binding.progressBarPomodoroCounter.progress = numberOfFinishedPomodoro * (100/quantityOfPomodoros)
+                        binding.progressBarMinutes.apply {
+                            progress = 0
+                            max = timeOfLongBreak.toInt()
+                        }
                     }
                 }
             } else{
                 startTimerFromStopped(timeOfSinglePomodoro, TimerTask.Pomodoro)
+                binding.progressBarMinutes.max = timeOfSinglePomodoro.toInt()
             }
         }
     }
@@ -220,8 +244,21 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         updateButtons()
     }
 
-    private fun updateProgressCircle(){
-
+    private fun updateProgressCircle(isFinished: Boolean = false){
+        binding.progressBarMinutes.max = timeOfSinglePomodoro.toInt()
+        if (isFinished){
+            binding.apply {
+                progressBarPomodoroCounter.progress = 100
+                progressBarMinutes.progress = 100
+                progressBarSeconds.progress = 120
+            }
+        }else{
+            binding.apply {
+                progressBarPomodoroCounter.progress = 0
+                progressBarMinutes.progress = 0
+                progressBarSeconds.progress = 0
+            }
+        }
     }
 
     companion object{

@@ -21,7 +21,7 @@ class PomodoroItem(
     override fun bind(viewBinding: ItemPomodoroBinding, position: Int) {
         viewBinding.apply {
             titleText.text = currentPomodoro.name
-            descriptionText.apply {
+            if (currentPomodoro.description.isNotEmpty()) descriptionText.apply {
                 text = currentPomodoro.description
                 setAnimationDuration(500)
                 setEllipsizedText("See more")
@@ -38,7 +38,7 @@ class PomodoroItem(
                 it.findNavController().navigate(goToPomodoro)
             }
 
-            editPomodoro.setOnClickListener {
+            titleText.setOnClickListener {
                 val goToPomodoroEdit = PomodoroListFragmentDirections.actionPomodoroListFragmentToPomodoroCreatorFragment(false, currentPomodoro)
                 it.findNavController().navigate(goToPomodoroEdit)
             }
