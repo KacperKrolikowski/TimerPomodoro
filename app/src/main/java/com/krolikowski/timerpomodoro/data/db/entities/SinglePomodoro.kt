@@ -23,7 +23,7 @@ data class SinglePomodoro(
     var longBreakTime: Int,
     @ColumnInfo(name = "pomodoro_long_break_often")
     var longBreakOften: Int,
-): Parcelable {
+) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 }

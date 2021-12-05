@@ -6,7 +6,7 @@ import android.os.CountDownTimer
 import android.os.IBinder
 import android.util.Log
 
-class TimerService: Service() {
+class TimerService : Service() {
 
     private lateinit var timer: CountDownTimer
 
@@ -15,22 +15,10 @@ class TimerService: Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        /*
-        val notificationIntent = Intent(this, QuickPomodoroFragment::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        val notification = NotificationCompat.Builder(this, "TimerService")
-            .setContentTitle("Pomodoro timer")
-            .setContentText("00:00")
-            .setContentIntent(pendingIntent)
-            .build()
-
-         */
-
         timeToCount = intent!!.getLongExtra("TIME_TO_COUNT", 25L)
         val timerTask = intent.getSerializableExtra("TIMER_TASK")
 
-        timer = object : CountDownTimer(timeToCount * 1000, 1000){
+        timer = object : CountDownTimer(timeToCount * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeToCount = millisUntilFinished / 1000
                 Log.d("DEBUG_SERVICE", timeToCount.toString())
@@ -45,13 +33,11 @@ class TimerService: Service() {
                 sendBroadcast(finishIntent)
             }
         }.start()
-        //startForeground(1, notification)
 
         return START_NOT_STICKY
     }
 
     override fun onDestroy() {
-
         timer.cancel()
 
         val backTimeIntent = Intent(TIMER_STATE)
@@ -60,11 +46,10 @@ class TimerService: Service() {
 
         Log.d("DEBUG_SERVICE2", timeToCount.toString())
 
-
         super.onDestroy()
     }
 
-    companion object{
+    companion object {
         const val TIMER_UPDATE = "timerUpdate"
         const val TIME_EXTRA = "timeExtra"
         const val TIMER_STATE = "timerState"

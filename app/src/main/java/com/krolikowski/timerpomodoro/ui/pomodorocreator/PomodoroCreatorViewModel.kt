@@ -10,9 +10,12 @@ import javax.inject.Inject
 
 class PomodoroCreatorViewModel @Inject constructor(
     private val pomodoroDatabaseRepository: PomodoroDatabaseRepositoryType
-): BaseViewModel() {
+) : BaseViewModel() {
 
-    fun insertPomodoro(pomodoro: SinglePomodoro) = CoroutineScope(Dispatchers.Main).launch { pomodoroDatabaseRepository.insertPomodoro(pomodoro) }
-    fun deletePomodoro(pomodoro: SinglePomodoro) = CoroutineScope(Dispatchers.Main).launch{ pomodoroDatabaseRepository.deletePomodoro(pomodoro) }
+    fun insertPomodoro(pomodoro: SinglePomodoro) =
+        CoroutineScope(Dispatchers.Main).launch { pomodoroDatabaseRepository.insertPomodoro(pomodoro) }
+
+    fun deletePomodoro(pomodoro: SinglePomodoro) =
+        CoroutineScope(Dispatchers.Main).launch { pomodoroDatabaseRepository.deletePomodoro(pomodoro) }
 
 }

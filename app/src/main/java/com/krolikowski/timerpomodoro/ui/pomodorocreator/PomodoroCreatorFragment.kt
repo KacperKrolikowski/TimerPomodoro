@@ -14,7 +14,8 @@ import com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro
 import com.krolikowski.timerpomodoro.databinding.FragmentPomodoroCreatorBinding
 import com.krolikowski.timerpomodoro.helpers.core.BaseFragment
 
-class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, PomodoroCreatorViewModel>() {
+class PomodoroCreatorFragment :
+    BaseFragment<FragmentPomodoroCreatorBinding, PomodoroCreatorViewModel>() {
     override val binding by lazy { FragmentPomodoroCreatorBinding.inflate(layoutInflater) }
     override val viewModelClass = PomodoroCreatorViewModel::class.java
 
@@ -30,12 +31,20 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
         setListeners()
     }
 
-    private fun setExistingPomodoro(){
+    private fun setExistingPomodoro() {
         val argsPomodoro = navArgs.pomodoroToEdit
-        pomodoro = SinglePomodoro(argsPomodoro.name, argsPomodoro.description, argsPomodoro.taskTime, argsPomodoro.workAmount, argsPomodoro.shortBreakTime, argsPomodoro.longBreakTime, argsPomodoro.longBreakOften)
+        pomodoro = SinglePomodoro(
+            argsPomodoro.name,
+            argsPomodoro.description,
+            argsPomodoro.taskTime,
+            argsPomodoro.workAmount,
+            argsPomodoro.shortBreakTime,
+            argsPomodoro.longBreakTime,
+            argsPomodoro.longBreakOften
+        )
     }
 
-    private fun setValues(){
+    private fun setValues() {
         binding.apply {
             pomodoroNameEdittext.setText(pomodoro.name)
             pomodoroTimePicker.apply {
@@ -66,7 +75,7 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
         }
     }
 
-    private fun setListeners(){
+    private fun setListeners() {
         binding.apply {
             saveButton.setOnClickListener { updateValues() }
             deleteButton.setOnClickListener { deletePomodoro() }
@@ -76,7 +85,7 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
         }
     }
 
-    private fun updateValues(){
+    private fun updateValues() {
         pomodoro.apply {
             name = binding.pomodoroNameEdittext.text.toString()
             description = binding.pomodoroDescriptionEdittext.text.toString()
@@ -90,7 +99,7 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
     }
 
     private fun savePomodoro() {
-        when{
+        when {
             pomodoro.name.isEmpty() -> {
                 hideKeyboard()
                 Snackbar.make(requireView(), "Name can not be empty", Snackbar.LENGTH_SHORT).show()
@@ -115,7 +124,7 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
         }
     }
 
-    private fun openAdvanceSettings(isAdvance: Boolean = false){
+    private fun openAdvanceSettings(isAdvance: Boolean = false) {
         binding.apply {
             shortBreakTimeAdvTextview.isVisible = isAdvance
             shortBreakTimeAdvPicker.isVisible = isAdvance
@@ -126,8 +135,9 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
         }
     }
 
-    private fun deletePomodoro(){
-        val backAction = PomodoroCreatorFragmentDirections.actionPomodoroCreatorFragmentToPomodoroListFragment()
+    private fun deletePomodoro() {
+        val backAction =
+            PomodoroCreatorFragmentDirections.actionPomodoroCreatorFragmentToPomodoroListFragment()
         if (!navArgs.isNewPomodoro) navArgs.pomodoroToEdit.let { viewModel.deletePomodoro(it) }
         findNavController().navigate(backAction)
     }

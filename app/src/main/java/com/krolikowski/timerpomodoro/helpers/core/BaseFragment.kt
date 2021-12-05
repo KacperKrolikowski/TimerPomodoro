@@ -13,8 +13,8 @@ import androidx.viewbinding.ViewBinding
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<VB: ViewBinding, VM: BaseViewModel> :
-DaggerFragment() {
+abstract class BaseFragment<VB : ViewBinding, VM : BaseViewModel> :
+    DaggerFragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
@@ -36,7 +36,8 @@ DaggerFragment() {
     }
 
     private fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager =
+            getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

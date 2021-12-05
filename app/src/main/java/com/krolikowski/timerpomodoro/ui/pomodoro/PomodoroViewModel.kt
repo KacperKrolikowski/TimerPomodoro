@@ -7,11 +7,12 @@ import javax.inject.Inject
 
 class PomodoroViewModel @Inject constructor(
     private val sharedPreferenceRepository: SharedPreferenceRepository
-): BaseViewModel() {
+) : BaseViewModel() {
 
     fun getTimeFormSharedPreferences() = sharedPreferenceRepository.getTime()
     fun getQuantityFromSharedPreferences() = sharedPreferenceRepository.getQuantity()
 
     fun getTimerSecondsRemaining() = sharedPreferenceRepository.getTimerSecondsRemaining()
-    fun saveTimerSecondsRemaining(time: Long) = sharedPreferenceRepository.saveTimerSecondsRemaining(time)
+    fun saveTimerSecondsRemaining(time: Long) =
+        sharedPreferenceRepository.saveTimerSecondsRemaining(time)
 }

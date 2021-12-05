@@ -59,12 +59,12 @@
         android:id="@+id/main_timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="00:00"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="00:00" />
 
     <TextView
         android:id="@+id/counter"
@@ -84,12 +84,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:clickable="true"
+        android:contentDescription="@string/start"
+        android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/progress_bar_pomodoro_counter"
-        app:srcCompat="@drawable/ic_start"
-        android:contentDescription="@string/start"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_start" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/pause_fab"
@@ -98,11 +98,11 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:clickable="true"
+        android:contentDescription="@string/pause"
+        android:focusable="true"
         app:layout_constraintEnd_toStartOf="@+id/start_fab"
         app:layout_constraintTop_toBottomOf="@+id/progress_bar_pomodoro_counter"
-        app:srcCompat="@drawable/ic_pause"
-        android:contentDescription="@string/pause"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_pause" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/stop_fab"
@@ -111,11 +111,11 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:clickable="true"
+        android:contentDescription="@string/stop"
+        android:focusable="true"
         app:layout_constraintStart_toEndOf="@+id/start_fab"
         app:layout_constraintTop_toBottomOf="@+id/progress_bar_pomodoro_counter"
-        app:srcCompat="@drawable/ic_stop"
-        android:contentDescription="@string/stop"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_stop" />
 
     <TextView
         android:id="@+id/stateNameTV"

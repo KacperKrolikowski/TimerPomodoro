@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 class PomodoroListViewModel @Inject constructor(
     private val pomodoroDatabaseRepository: PomodoroDatabaseRepositoryType
-) :BaseViewModel() {
+) : BaseViewModel() {
 
     var pomodoroList: LiveData<List<SinglePomodoro>>
 
@@ -19,7 +19,7 @@ class PomodoroListViewModel @Inject constructor(
         pomodoroList = pomodoroDatabaseRepository.getAllPomodoros()
     }
 
-    fun getAllPomodoros(){
+    fun getAllPomodoros() {
         pomodoroList = pomodoroDatabaseRepository.getAllPomodoros()
     }
 }

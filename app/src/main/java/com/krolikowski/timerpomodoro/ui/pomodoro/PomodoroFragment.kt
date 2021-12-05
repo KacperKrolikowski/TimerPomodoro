@@ -18,7 +18,7 @@ import com.krolikowski.timerpomodoro.services.TimerService
 import com.krolikowski.timerpomodoro.utils.TimerState
 import com.krolikowski.timerpomodoro.utils.TimerTask
 
-class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>() {
+class PomodoroFragment : BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>() {
     override val binding by lazy { FragmentPomodoroBinding.inflate(layoutInflater) }
     override val viewModelClass = PomodoroViewModel::class.java
 
@@ -51,9 +51,10 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         requireContext().unregisterReceiver(updateTime)
     }
 
-    private fun setPomodoro() = if (navArgs.isQuickPomodoro) setQuickPomodoro() else setSelectedPomodoro()
+    private fun setPomodoro() =
+        if (navArgs.isQuickPomodoro) setQuickPomodoro() else setSelectedPomodoro()
 
-    private fun setListeners(){
+    private fun setListeners() {
         binding.apply {
             startFab.setOnClickListener { startPomodoro() }
             pauseFab.setOnClickListener { pausePomodoro() }
@@ -61,7 +62,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private fun setQuickPomodoro(){
+    private fun setQuickPomodoro() {
         timeOfSinglePomodoro = viewModel.getTimeFormSharedPreferences().toLong() * 60
         quantityOfPomodoros = viewModel.getQuantityFromSharedPreferences()
         binding.pomodoroNameTV.text = getString(R.string.quick_pomodoro)
@@ -69,9 +70,9 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         binding.counter.text = "1/$quantityOfPomodoros"
     }
 
-    private fun setSelectedPomodoro(){
+    private fun setSelectedPomodoro() {
         currentPomodoro = navArgs.pomodoroInstance!!
-        with(currentPomodoro){
+        with(currentPomodoro) {
             timeOfSinglePomodoro = this.taskTime.toLong() * 60
             timeOfShortBreak = this.shortBreakTime.toLong()
             timeOfLongBreak = this.longBreakTime.toLong()
@@ -83,13 +84,16 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private fun setService(){
+    private fun setService() {
         serviceIntent = Intent(requireContext(), TimerService::class.java)
         requireContext().registerReceiver(updateTime, IntentFilter(TimerService.TIMER_UPDATE))
-        requireContext().registerReceiver(timerStatusControlReceiver, IntentFilter(TimerService.TIMER_STATUS))
+        requireContext().registerReceiver(
+            timerStatusControlReceiver,
+            IntentFilter(TimerService.TIMER_STATUS)
+        )
     }
 
-    private val updateTime: BroadcastReceiver = object : BroadcastReceiver(){
+    private val updateTime: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val receivedTime = intent!!.getLongExtra(TimerService.TIME_EXTRA, 0L)
             updateUI(receivedTime)
@@ -97,8 +101,8 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private fun updateOnTickProgressCircle(receiverTime: Long){
-        when(receiverTime){
+    private fun updateOnTickProgressCircle(receiverTime: Long) {
+        when (receiverTime) {
             0L -> {
                 binding.progressBarMinutes.progress += 1
             }
@@ -109,8 +113,8 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
     }
 
     @SuppressLint("SetTextI18n")
-    private fun updateUI(newTime: Long){
-        val minutesUntilFinished = newTime/60
+    private fun updateUI(newTime: Long) {
+        val minutesUntilFinished = newTime / 60
         val secondsInMinuteUntilFinished = newTime - minutesUntilFinished * 60
         val secondsStr = secondsInMinuteUntilFinished.toString()
 
@@ -122,7 +126,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
             }"
     }
 
-    private val pausedTimer: BroadcastReceiver = object : BroadcastReceiver(){
+    private val pausedTimer: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val pausedTime = intent!!.getLongExtra(TimerService.TIMER_PAUSED_TIME, 0L)
             viewModel.saveTimerSecondsRemaining(pausedTime)
@@ -130,10 +134,10 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private val timerStatusControlReceiver: BroadcastReceiver = object : BroadcastReceiver(){
+    private val timerStatusControlReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             val previousTimerTask = intent!!.getSerializableExtra(TimerService.TIMER_STATUS_VAL)
-            if (previousTimerTask == TimerTask.Pomodoro){
+            if (previousTimerTask == TimerTask.Pomodoro) {
                 when {
                     numberOfFinishedPomodoro == (quantityOfPomodoros + 1) -> {
                         finishedPomodoro()
@@ -142,7 +146,8 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
                         startTimerFromStopped(timeOfShortBreak, TimerTask.ShortBreak)
                         numberOfShortBreaks--
                         updatePomodoroCounter()
-                        binding.progressBarPomodoroCounter.progress = numberOfFinishedPomodoro * (100/quantityOfPomodoros)
+                        binding.progressBarPomodoroCounter.progress =
+                            numberOfFinishedPomodoro * (100 / quantityOfPomodoros)
                         binding.progressBarMinutes.apply {
                             progress = 0
                             max = timeOfShortBreak.toInt()
@@ -152,21 +157,22 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
                         startTimerFromStopped(timeOfLongBreak, TimerTask.LongBreak)
                         numberOfShortBreaks = numberOfShortBreaksBeforeLongBreak
                         updatePomodoroCounter()
-                        binding.progressBarPomodoroCounter.progress = numberOfFinishedPomodoro * (100/quantityOfPomodoros)
+                        binding.progressBarPomodoroCounter.progress =
+                            numberOfFinishedPomodoro * (100 / quantityOfPomodoros)
                         binding.progressBarMinutes.apply {
                             progress = 0
                             max = timeOfLongBreak.toInt()
                         }
                     }
                 }
-            } else{
+            } else {
                 startTimerFromStopped(timeOfSinglePomodoro, TimerTask.Pomodoro)
                 binding.progressBarMinutes.max = timeOfSinglePomodoro.toInt()
             }
         }
     }
 
-    private fun startTimerFromStopped(time: Long, nextTimerTask: TimerTask = TimerTask.Pomodoro){
+    private fun startTimerFromStopped(time: Long, nextTimerTask: TimerTask = TimerTask.Pomodoro) {
         serviceIntent.putExtra("TIME_TO_COUNT", time)
         serviceIntent.putExtra("TIMER_TASK", nextTimerTask)
         requireContext().startService(serviceIntent)
@@ -175,14 +181,14 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         updateStateText(nextTimerTask)
     }
 
-    private fun updatePomodoroCounter(){
+    private fun updatePomodoroCounter() {
         numberOfFinishedPomodoro++
         binding.counter.text = "$numberOfFinishedPomodoro/$quantityOfPomodoros"
         Log.d(deb_pom, "$numberOfFinishedPomodoro/$quantityOfPomodoros")
     }
 
-    private fun startPomodoro(){
-        when(timerState){
+    private fun startPomodoro() {
+        when (timerState) {
             TimerState.Stopped -> startTimerFromStopped(timeOfSinglePomodoro)
             TimerState.Paused -> {
                 val previousTime = viewModel.getTimerSecondsRemaining()
@@ -195,7 +201,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private fun pausePomodoro(){
+    private fun pausePomodoro() {
         timerState = TimerState.Paused
 
         requireContext().registerReceiver(pausedTimer, IntentFilter(TimerService.TIMER_STATE))
@@ -204,26 +210,26 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         updateButtons()
     }
 
-    private fun stopPomodoro(){
+    private fun stopPomodoro() {
         timerState = TimerState.Stopped
         requireContext().stopService(serviceIntent)
         updateButtons()
         setPomodoro()
     }
 
-    private fun updateButtons(){
-        when(timerState){
-            TimerState.Running ->{
+    private fun updateButtons() {
+        when (timerState) {
+            TimerState.Running -> {
                 binding.startFab.isEnabled = false
                 binding.pauseFab.isEnabled = true
                 binding.stopFab.isEnabled = true
             }
-            TimerState.Stopped ->{
+            TimerState.Stopped -> {
                 binding.startFab.isEnabled = true
                 binding.pauseFab.isEnabled = false
                 binding.stopFab.isEnabled = false
             }
-            TimerState.Paused ->{
+            TimerState.Paused -> {
                 binding.startFab.isEnabled = true
                 binding.pauseFab.isEnabled = false
                 binding.stopFab.isEnabled = true
@@ -231,28 +237,28 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    private fun updateStateText(timerTask: TimerTask){
+    private fun updateStateText(timerTask: TimerTask) {
         binding.stateNameTV.text = when (timerTask) {
-                TimerTask.Pomodoro -> "Pomodoro"
-                TimerTask.ShortBreak -> "Short break"
-                TimerTask.LongBreak -> "Long break"
-            }
+            TimerTask.Pomodoro -> "Pomodoro"
+            TimerTask.ShortBreak -> "Short break"
+            TimerTask.LongBreak -> "Long break"
+        }
     }
 
-    private fun finishedPomodoro(){
+    private fun finishedPomodoro() {
         setPomodoro()
         updateButtons()
     }
 
-    private fun updateProgressCircle(isFinished: Boolean = false){
+    private fun updateProgressCircle(isFinished: Boolean = false) {
         binding.progressBarMinutes.max = timeOfSinglePomodoro.toInt()
-        if (isFinished){
+        if (isFinished) {
             binding.apply {
                 progressBarPomodoroCounter.progress = 100
                 progressBarMinutes.progress = 100
                 progressBarSeconds.progress = 120
             }
-        }else{
+        } else {
             binding.apply {
                 progressBarPomodoroCounter.progress = 0
                 progressBarMinutes.progress = 0
@@ -261,7 +267,7 @@ class PomodoroFragment: BaseFragment<FragmentPomodoroBinding, PomodoroViewModel>
         }
     }
 
-    companion object{
+    companion object {
         const val deb_pom = "DEBUG_POMODORO"
     }
 }

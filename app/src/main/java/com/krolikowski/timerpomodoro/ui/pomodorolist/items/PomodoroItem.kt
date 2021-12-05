@@ -34,12 +34,20 @@ class PomodoroItem(
             }
 
             goToPomodoroButton.setOnClickListener {
-                val goToPomodoro = PomodoroListFragmentDirections.actionPomodoroListFragmentToPomodoroFragment(false, currentPomodoro)
+                val goToPomodoro =
+                    PomodoroListFragmentDirections.actionPomodoroListFragmentToPomodoroFragment(
+                        false,
+                        currentPomodoro
+                    )
                 it.findNavController().navigate(goToPomodoro)
             }
 
             titleText.setOnClickListener {
-                val goToPomodoroEdit = PomodoroListFragmentDirections.actionPomodoroListFragmentToPomodoroCreatorFragment(false, currentPomodoro)
+                val goToPomodoroEdit =
+                    PomodoroListFragmentDirections.actionPomodoroListFragmentToPomodoroCreatorFragment(
+                        false,
+                        currentPomodoro
+                    )
                 it.findNavController().navigate(goToPomodoroEdit)
             }
         }
