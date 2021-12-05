@@ -47,6 +47,7 @@ class PomodoroCreatorFragment :
     private fun setValues() {
         binding.apply {
             pomodoroNameEdittext.setText(pomodoro.name)
+            pomodoroDescriptionEdittext.setText(pomodoro.description)
             pomodoroTimePicker.apply {
                 minValue = 1
                 maxValue = 60

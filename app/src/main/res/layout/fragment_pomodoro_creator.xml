@@ -189,7 +189,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/habit_delete"
             android:layout_marginEnd="24dp"
             android:textColor="@color/hard_red"/>
 
@@ -197,9 +197,9 @@
             android:id="@+id/save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
+            android:text="@string/save"
             android:layout_marginStart="24dp"
-            android:backgroundTint="@color/someGreen"/>
+            android:backgroundTint="@color/green"/>
 
     </LinearLayout>
 

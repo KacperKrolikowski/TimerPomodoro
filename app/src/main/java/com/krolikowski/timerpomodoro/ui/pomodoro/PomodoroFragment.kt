@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
 import com.krolikowski.timerpomodoro.R
 import com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro
@@ -102,13 +101,11 @@ class PomodoroFragment : BaseFragment<FragmentPomodoroBinding, PomodoroViewModel
     }
 
     private fun updateOnTickProgressCircle(receiverTime: Long) {
-        when (receiverTime) {
-            0L -> {
-                binding.progressBarMinutes.progress += 1
-            }
-            else -> {
-                binding.progressBarSeconds.progress = ((60 - receiverTime) * 2).toInt()
-            }
+        if (receiverTime % 60 == 0L) {
+            binding.progressBarMinutes.progress += 1
+            binding.progressBarSeconds.progress = 0
+        } else{
+            binding.progressBarSeconds.progress += 2
         }
     }
 
@@ -213,6 +210,7 @@ class PomodoroFragment : BaseFragment<FragmentPomodoroBinding, PomodoroViewModel
     private fun stopPomodoro() {
         timerState = TimerState.Stopped
         requireContext().stopService(serviceIntent)
+        updateProgressCircle(true)
         updateButtons()
         setPomodoro()
     }
@@ -248,6 +246,7 @@ class PomodoroFragment : BaseFragment<FragmentPomodoroBinding, PomodoroViewModel
     private fun finishedPomodoro() {
         setPomodoro()
         updateButtons()
+        updateProgressCircle(true)
     }
 
     private fun updateProgressCircle(isFinished: Boolean = false) {
