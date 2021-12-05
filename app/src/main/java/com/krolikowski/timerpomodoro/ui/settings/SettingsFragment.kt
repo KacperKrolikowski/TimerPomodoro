@@ -3,6 +3,7 @@ package com.krolikowski.timerpomodoro.ui.settings
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import com.google.android.material.snackbar.Snackbar
 import com.krolikowski.timerpomodoro.databinding.FragmentSettingsBinding
 import com.krolikowski.timerpomodoro.helpers.core.BaseFragment
 
@@ -27,6 +28,8 @@ class SettingsFragment: BaseFragment<FragmentSettingsBinding, SettingsViewModel>
         binding.quickPomodoroSettingsSaveButton.setOnClickListener {
             viewModel.setTime(binding.quickPomodoroSettingsTime.text.toString().toInt())
             viewModel.setQuantity(binding.quickPomodoroSettingsQuantity.text.toString().toInt())
+            Snackbar.make(requireView(), "Changes saved", Snackbar.LENGTH_SHORT).show()
+            hideKeyboard()
         }
     }
 }

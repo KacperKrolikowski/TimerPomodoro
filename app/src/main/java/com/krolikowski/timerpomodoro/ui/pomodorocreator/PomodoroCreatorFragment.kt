@@ -1,11 +1,14 @@
 package com.krolikowski.timerpomodoro.ui.pomodorocreator
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import com.krolikowski.timerpomodoro.R
 import com.krolikowski.timerpomodoro.data.db.entities.SinglePomodoro
 import com.krolikowski.timerpomodoro.databinding.FragmentPomodoroCreatorBinding
@@ -88,7 +91,10 @@ class PomodoroCreatorFragment: BaseFragment<FragmentPomodoroCreatorBinding, Pomo
 
     private fun savePomodoro() {
         when{
-            pomodoro.name.isEmpty() -> Toast.makeText(context, "Name can not be empty", Toast.LENGTH_SHORT).show()
+            pomodoro.name.isEmpty() -> {
+                hideKeyboard()
+                Snackbar.make(requireView(), "Name can not be empty", Snackbar.LENGTH_SHORT).show()
+            }
             navArgs.isNewPomodoro -> {
                 viewModel.insertPomodoro(pomodoro)
                 findNavController().navigate(R.id.action_pomodoroCreatorFragment_to_pomodoroListFragment)
