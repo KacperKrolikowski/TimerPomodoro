@@ -4,7 +4,6 @@ import android.app.Service
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder
-import android.util.Log
 
 class TimerService : Service() {
 
@@ -21,7 +20,6 @@ class TimerService : Service() {
         timer = object : CountDownTimer(timeToCount * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 timeToCount = millisUntilFinished / 1000
-                Log.d("DEBUG_SERVICE", timeToCount.toString())
                 val backIntent = Intent(TIMER_UPDATE)
                 backIntent.putExtra(TIME_EXTRA, timeToCount)
                 sendBroadcast(backIntent)
@@ -44,8 +42,6 @@ class TimerService : Service() {
         backTimeIntent.putExtra(TIMER_PAUSED_TIME, timeToCount)
         sendBroadcast(backTimeIntent)
 
-        Log.d("DEBUG_SERVICE2", timeToCount.toString())
-
         super.onDestroy()
     }
 
@@ -57,5 +53,4 @@ class TimerService : Service() {
         const val TIMER_STATUS = "timerStatus"
         const val TIMER_STATUS_VAL = "timerStatusVal"
     }
-
 }

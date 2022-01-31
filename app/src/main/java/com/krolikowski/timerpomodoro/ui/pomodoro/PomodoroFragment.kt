@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.krolikowski.timerpomodoro.R
@@ -176,12 +175,12 @@ class PomodoroFragment : BaseFragment<FragmentPomodoroBinding, PomodoroViewModel
         timerState = TimerState.Running
         updateButtons()
         updateStateText(nextTimerTask)
+        updateProgressCircle()
     }
 
     private fun updatePomodoroCounter() {
         numberOfFinishedPomodoro++
         binding.counter.text = "$numberOfFinishedPomodoro/$quantityOfPomodoros"
-        Log.d(deb_pom, "$numberOfFinishedPomodoro/$quantityOfPomodoros")
     }
 
     private fun startPomodoro() {
